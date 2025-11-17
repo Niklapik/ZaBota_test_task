@@ -1,0 +1,89 @@
+# Виртуальное окружение
+venv/
+ENV/
+env/
+.venv/
+
+# Файлы базы данных SQLite
+*.sqlite3
+*.db
+*.db-journal
+
+# Кэш Python
+__pycache__/
+*.py[cod]
+.python-version
+
+# Логи и служебные файлы Django
+*.log
+*.pot
+
+# Локальные настройки
+local_settings.py
+local_settings.pyc
+
+# Файлы окружения
+.env
+.env/
+.env.local
+.env.*.local
+.env.production
+/secrets.env
+
+# Медиафайлы
+media/
+uploads/
+
+# Статические файлы (если собираются collectstatic)
+staticfiles/
+
+# Файлы операционной системы Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Скрытые файлы атрибутов
+._*
+
+# Файлы кэша и временные файлы
+[Tt]humbs.db
+[Tt]emp/
+[Tt]mp/
+*.tmp
+*.temp
+
+# Файлы редакторов и IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Файлы установщика pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Файлы покрытия тестов и юнит-тестов
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+
+# Файлы сборки и дистрибуции
+build/
+dist/
+*.egg-info/
+*.egg
+*.whl
+
+# Файлы проектов Windows
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.suo
+*.opensdf
+*.sdf
