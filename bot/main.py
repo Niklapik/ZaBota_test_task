@@ -1,6 +1,6 @@
 from aiogram import F
 from aiogram.filters import Command
-from aiogram.types import Message
+from aiogram.types import Message, ContentType
 from aiogram.enums import ChatAction
 import logging
 
@@ -55,7 +55,7 @@ async def help_command(message: Message) -> None:
     await message.answer(text=HELP_TEXT, parse_mode='HTML', reply_markup=kb_new_request)
 
 
-@dp.message()
+@dp.message(F.content_type == ContentType.TEXT)
 async def message_processing(message: Message) -> None:
     try:
         user_id = get_user_id(message)
@@ -81,6 +81,11 @@ async def message_processing(message: Message) -> None:
     except Exception as error:
         logging.error(f'Ошибка запроса для {user_id}: {error}')
         await message.answer('Ошибка при обработке запроса', reply_markup=kb_new_request)
+
+
+@dp.message(F.content_type != ContentType.TEXT)
+async def not_text_handler(message: Message):
+    await message.answer("❌Я работаю только с текстовыми сообщениями ❌")
 
 
 if __name__ == '__main__':

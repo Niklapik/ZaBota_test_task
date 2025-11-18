@@ -13,9 +13,12 @@ def setup_logging():
     os.makedirs('logs', exist_ok=True)
     logging.basicConfig(
         level=logging.INFO,
-        filename='logs/bot.log',
-        encoding='utf-8',
-        format='%(asctime)s - %(levelname)s - %(message)s')
+        handlers=[
+            logging.FileHandler('logs/bot.log', encoding='utf-8'),
+            logging.StreamHandler()
+        ],
+        format='%(asctime)s - %(levelname)s - %(message)s'
+    )
 
 
 def configure_bot():
