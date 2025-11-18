@@ -4,6 +4,7 @@ from collections import defaultdict
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
 from aiogram.types import Message
+from aiogram.enums import ChatAction
 from dotenv import load_dotenv
 from openai import OpenAI
 
@@ -52,6 +53,8 @@ async def help_command(message: Message) -> None:
 @dp.message()
 async def message_processing(message: Message) -> None:
     user_id = message.from_user.id
+
+    await bot.send_chat_action(chat_id=message.chat.id, action=ChatAction.TYPING)
 
     user_contexts[user_id].append({"role": "user", "content": message.text})
 
