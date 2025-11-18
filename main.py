@@ -31,6 +31,11 @@ async def start_command(message: Message) -> None:
     await message.answer('Бот успешно запущен!')
 
 
+@dp.message(Command('help'))
+async def help_command(message: Message) -> None:
+    await message.answer('Тут пока ничего нет, но скоро тут будет текст-подсказка')
+
+
 @dp.message()
 async def message_processing(message: Message) -> None:
     user_id = message.from_user.id
