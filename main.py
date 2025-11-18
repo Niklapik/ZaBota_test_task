@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 from keyboards import kb_new_request
+from constants import HELP_TEXT, START_TEXT, NEW_REQUEST_TEXT
 
 load_dotenv()
 BOT_TOKEN = os.getenv('BOT_TOKEN')
@@ -24,23 +25,6 @@ client = OpenAI(
 
 user_contexts = defaultdict(list)
 
-HELP_TEXT = """
-📖Доступные команды:📖
-
-<b>/start</b> - Запустить бота и сбросить контекст
-<b>/help</b> - Показать эту справку
-🔘Кнопка "Новый запрос"🔘 - сбросить контекст и начать новый диалог
-
-💡Как использовать:💡
-- Просто напишите вопрос - я отвечу с учетом контекста диалога
-- Нажмите "Новый запрос", чтобы начать новый диалог (сбросить контекст диалога)
-
-🚀Возможности:🚀
-- Отвечаю на вопросы любой сложности
-- Помогаю с кодом, текстами, идеями
-- Поддерживаю контекст диалога
-"""
-
 
 @dp.startup()
 async def startup() -> None:
@@ -55,13 +39,13 @@ async def reset_context(user_id: int, message: Message, answer_text: str) -> Non
 @dp.message(Command('start'))
 async def start_command(message: Message) -> None:
     await reset_context(user_id=message.from_user.id, message=message,
-                        answer_text='Добро пожаловать! Я ваш AI-помощник 🤖. Чем могу быть полезен? С удовольствием помогу с ЗаБотой о вас!')
+                        answer_text=START_TEXT)
 
 
 @dp.message(F.text == "Новый запрос")
 async def new_request(message: Message) -> None:
     await reset_context(user_id=message.from_user.id, message=message,
-                        answer_text='Контекст диалога очищен. Задавайте новый вопрос 🔄')
+                        answer_text=NEW_REQUEST_TEXT)
 
 
 @dp.message(Command('help'))
