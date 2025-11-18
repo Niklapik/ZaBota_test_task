@@ -6,6 +6,8 @@ from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
 from openai import OpenAI
 
+from exceptions import BotTokenNotFoundException, OpenaiApiKeyNotFoundException
+
 
 def configure_bot():
     logging.basicConfig(level=logging.INFO)
@@ -13,6 +15,14 @@ def configure_bot():
 
     BOT_TOKEN = os.getenv('BOT_TOKEN')
     OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
+    if not BOT_TOKEN:
+        logging.critical('BOT_TOKEN не определён')
+        raise BotTokenNotFoundException
+
+    if not OPENAI_API_KEY:
+        logging.critical('OPENAI_API_KEY не определён')
+        raise OpenaiApiKeyNotFoundException
 
     bot = Bot(BOT_TOKEN)
     dp = Dispatcher()

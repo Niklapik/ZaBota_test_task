@@ -7,8 +7,13 @@ import logging
 from keyboards import kb_new_request
 from constants import HELP_TEXT, START_TEXT, NEW_REQUEST_TEXT
 from config import configure_bot
+from exceptions import BaseConfigException
 
-bot, dp, client, user_contexts = configure_bot()
+try:
+    bot, dp, client, user_contexts = configure_bot()
+except BaseConfigException as error:
+    logging.critical(f'Ошибка конфигурации бота: {error}')
+    exit(1)
 
 
 @dp.startup()
