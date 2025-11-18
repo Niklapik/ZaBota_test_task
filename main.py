@@ -1,29 +1,13 @@
-import os
-from collections import defaultdict
-
-from aiogram import Bot, Dispatcher, F
+from aiogram import F
 from aiogram.filters import Command
 from aiogram.types import Message
 from aiogram.enums import ChatAction
-from dotenv import load_dotenv
-from openai import OpenAI
 
 from keyboards import kb_new_request
 from constants import HELP_TEXT, START_TEXT, NEW_REQUEST_TEXT
+from config import configure_bot
 
-load_dotenv()
-BOT_TOKEN = os.getenv('BOT_TOKEN')
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-
-bot = Bot(BOT_TOKEN)
-dp = Dispatcher()
-
-client = OpenAI(
-    base_url="https://neuroapi.host/v1",
-    api_key=OPENAI_API_KEY,
-)
-
-user_contexts = defaultdict(list)
+bot, dp, client, user_contexts = configure_bot()
 
 
 @dp.startup()
@@ -50,7 +34,7 @@ async def new_request(message: Message) -> None:
 
 @dp.message(Command('help'))
 async def help_command(message: Message) -> None:
-    await message.answer(text=HELP_TEXT, parse_mode='HTML')
+    await message.answer(text=HELP_TEXT, parse_mode='HTML', reply_markup=kb_new_request)
 
 
 @dp.message()
