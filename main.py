@@ -31,7 +31,7 @@ async def reset_context(user_id: int, message: Message, answer_text: str) -> Non
 async def start_command(message: Message) -> None:
     user_id = get_user_id(message)
     logging.info(f'Пользователь {user_id} вызвал /start')
-    await reset_context(user_id=message.from_user.id, message=message,
+    await reset_context(user_id=user_id, message=message,
                         answer_text=START_TEXT)
 
 
@@ -39,7 +39,7 @@ async def start_command(message: Message) -> None:
 async def new_request(message: Message) -> None:
     user_id = get_user_id(message)
     logging.info(f'Пользователь {user_id} нажал кнопку нового запроса')
-    await reset_context(user_id=message.from_user.id, message=message,
+    await reset_context(user_id=user_id, message=message,
                         answer_text=NEW_REQUEST_TEXT)
 
 
@@ -53,7 +53,7 @@ async def help_command(message: Message) -> None:
 @dp.message()
 async def message_processing(message: Message) -> None:
     try:
-        user_id = message.from_user.id
+        user_id = get_user_id(message)
 
         logging.info('Эмуляция набора теста ботом')
         await bot.send_chat_action(chat_id=message.chat.id, action=ChatAction.TYPING)
