@@ -1,4 +1,5 @@
 import os
+from collections import defaultdict
 
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
@@ -19,7 +20,8 @@ client = OpenAI(
     base_url="https://neuroapi.host/v1",
     api_key=OPENAI_API_KEY,
 )
-user_contexts = {}
+
+user_contexts = defaultdict(list)
 
 
 @dp.startup()
@@ -50,10 +52,6 @@ async def help_command(message: Message) -> None:
 @dp.message()
 async def message_processing(message: Message) -> None:
     user_id = message.from_user.id
-
-    # Можно добавить defaultdict
-    if user_id not in user_contexts:
-        user_contexts[user_id] = []
 
     user_contexts[user_id].append({"role": "user", "content": message.text})
 
