@@ -18,11 +18,11 @@ def configure_bot():
 
     if not BOT_TOKEN:
         logging.critical('BOT_TOKEN не определён')
-        raise BotTokenNotFoundException
+        raise BotTokenNotFoundException()
 
     if not OPENAI_API_KEY:
         logging.critical('OPENAI_API_KEY не определён')
-        raise OpenaiApiKeyNotFoundException
+        raise OpenaiApiKeyNotFoundException()
 
     bot = Bot(BOT_TOKEN)
     dp = Dispatcher()
