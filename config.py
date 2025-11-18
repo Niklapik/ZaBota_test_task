@@ -9,8 +9,17 @@ from openai import OpenAI
 from exceptions import BotTokenNotFoundException, OpenaiApiKeyNotFoundException
 
 
+def setup_logging():
+    os.makedirs('logs', exist_ok=True)
+    logging.basicConfig(
+        level=logging.INFO,
+        filename='logs/bot.log',
+        encoding='utf-8',
+        format='%(asctime)s - %(levelname)s - %(message)s')
+
+
 def configure_bot():
-    logging.basicConfig(level=logging.INFO)
+    setup_logging()
     load_dotenv()
 
     BOT_TOKEN = os.getenv('BOT_TOKEN')
