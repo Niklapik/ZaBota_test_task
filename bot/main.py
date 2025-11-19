@@ -26,7 +26,10 @@ def get_user_id(message: Message) -> int:
     return user_id
 
 
-async def reset_context(user_id: int, message: Message, answer_text: str) -> None:
+async def reset_context(
+        user_id: int,
+        message: Message,
+        answer_text: str) -> None:
     logging.info(f'Сброс контекста для пользователя {user_id}')
     user_contexts[user_id] = []
     await message.answer(text=answer_text, reply_markup=kb_new_request)
@@ -52,7 +55,8 @@ async def new_request(message: Message) -> None:
 async def help_command(message: Message) -> None:
     user_id = get_user_id(message)
     logging.info(f'Пользователь {user_id} вызвал /help')
-    await message.answer(text=HELP_TEXT, parse_mode='HTML', reply_markup=kb_new_request)
+    await message.answer(text=HELP_TEXT, parse_mode='HTML',
+                         reply_markup=kb_new_request)
 
 
 @dp.message(F.content_type == ContentType.TEXT)
@@ -61,9 +65,11 @@ async def message_processing(message: Message) -> None:
         user_id = get_user_id(message)
 
         logging.info('Эмуляция набора теста ботом')
-        await bot.send_chat_action(chat_id=message.chat.id, action=ChatAction.TYPING)
+        await bot.send_chat_action(chat_id=message.chat.id,
+                                   action=ChatAction.TYPING)
 
-        user_contexts[user_id].append({"role": "user", "content": message.text})
+        user_contexts[user_id].append({"role": "user",
+                                       "content": message.text})
 
         logging.info(f'Отправка запроса к AI для пользователя {user_id}')
         completion = client.chat.completions.create(
@@ -73,14 +79,16 @@ async def message_processing(message: Message) -> None:
 
         logging.info('Парсинг ответа AI')
         response_text = completion.choices[0].message.content
-        user_contexts[user_id].append({"role": "assistant", "content": response_text})
+        user_contexts[user_id].append({"role": "assistant",
+                                       "content": response_text})
 
         logging.info(f'Отправка ответа пользователю {user_id}')
         await message.answer(text=response_text, reply_markup=kb_new_request)
 
     except Exception as error:
         logging.error(f'Ошибка запроса для {user_id}: {error}')
-        await message.answer('Ошибка при обработке запроса', reply_markup=kb_new_request)
+        await message.answer('Ошибка при обработке запроса',
+                             reply_markup=kb_new_request)
 
 
 @dp.message(F.content_type != ContentType.TEXT)

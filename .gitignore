@@ -87,3 +87,6 @@ dist/
 *.suo
 *.opensdf
 *.sdf
+
+# Файл логов
+bot.log
