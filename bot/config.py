@@ -1,5 +1,5 @@
-import os
 import logging
+import os
 from collections import defaultdict
 
 from aiogram import Bot, Dispatcher

@@ -1,13 +1,14 @@
-from aiogram import F
-from aiogram.filters import Command
-from aiogram.types import Message, ContentType
-from aiogram.enums import ChatAction
 import logging
 
-from keyboards import kb_new_request
-from constants import HELP_TEXT, START_TEXT, NEW_REQUEST_TEXT
+from aiogram import F
+from aiogram.enums import ChatAction
+from aiogram.filters import Command
+from aiogram.types import ContentType, Message
+
 from config import configure_bot
+from constants import HELP_TEXT, NEW_REQUEST_TEXT, START_TEXT
 from exceptions import BaseConfigException
+from keyboards import kb_new_request
 
 try:
     bot, dp, client, user_contexts = configure_bot()
