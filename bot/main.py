@@ -110,7 +110,7 @@ async def message_processing(message: Message) -> None:
 
 
 @dp.message(F.content_type != ContentType.TEXT)
-async def not_text_handler(message: Message):
+async def not_text_handler(message: Message) -> None:
     """
     Обрабатывает НЕтекстовые сообщения пользователей и отправляет
     соответствующий ответ.
