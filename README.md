@@ -52,5 +52,7 @@ python main.py
 https://neuroapi.host/
 ```
 
+*Имя бота в телеграм: @zabotaa_test_bot*
+
 *Нет, это не реклама*  
 *К сожалению*
