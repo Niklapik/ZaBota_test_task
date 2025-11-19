@@ -46,7 +46,7 @@ cd bot/
 python main.py
 ```
 
-### *Получить OPENAI_API_KEY можно на сайте:*
+### *Получить OPENAI_API_KEY можно на сайте-посреднике:*
 
 ```
 https://neuroapi.host/
