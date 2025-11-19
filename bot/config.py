@@ -9,7 +9,9 @@ from openai import OpenAI
 from exceptions import BotTokenNotFoundException, OpenaiApiKeyNotFoundException
 
 
-def setup_logging():
+def setup_logging() -> None:
+    """Настройка параметров логирования для бота."""
+
     os.makedirs('logs', exist_ok=True)
     logging.basicConfig(
         level=logging.INFO,
@@ -21,7 +23,9 @@ def setup_logging():
     )
 
 
-def configure_bot():
+def configure_bot() -> tuple:
+    """Настройка, проверка и возвращение основных компонентов бота."""
+
     setup_logging()
     load_dotenv()
 

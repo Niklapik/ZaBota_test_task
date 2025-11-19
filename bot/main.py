@@ -19,10 +19,14 @@ except BaseConfigException as error:
 
 @dp.startup()
 async def startup() -> None:
+    """Выводит сообщение при успешном запуске бота."""
+
     logging.info('Бот успешно запущен!')
 
 
 def get_user_id(message: Message) -> int:
+    """Извлекает и возвращает user_id пользователя."""
+
     user_id = message.from_user.id
     return user_id
 
@@ -31,6 +35,8 @@ async def reset_context(
         user_id: int,
         message: Message,
         answer_text: str) -> None:
+    """Сбрасывает контекст диалога и отправляет соответствующее сообщение."""
+
     logging.info(f'Сброс контекста для пользователя {user_id}')
     user_contexts[user_id] = []
     await message.answer(text=answer_text, reply_markup=kb_new_request)
@@ -38,6 +44,8 @@ async def reset_context(
 
 @dp.message(Command('start'))
 async def start_command(message: Message) -> None:
+    """Обрабатывает команду /start - сбрасывает контекст и приветствует."""
+
     user_id = get_user_id(message)
     logging.info(f'Пользователь {user_id} вызвал /start')
     await reset_context(user_id=user_id, message=message,
@@ -46,6 +54,8 @@ async def start_command(message: Message) -> None:
 
 @dp.message(F.text == "Новый запрос")
 async def new_request(message: Message) -> None:
+    """Обрабатывает нажатие кнопки 'Новый запрос' - сбрасывает контекст."""
+
     user_id = get_user_id(message)
     logging.info(f'Пользователь {user_id} нажал кнопку нового запроса')
     await reset_context(user_id=user_id, message=message,
@@ -54,6 +64,8 @@ async def new_request(message: Message) -> None:
 
 @dp.message(Command('help'))
 async def help_command(message: Message) -> None:
+    """Обрабатывает команду /help - отправляет сообщение-справку."""
+
     user_id = get_user_id(message)
     logging.info(f'Пользователь {user_id} вызвал /help')
     await message.answer(text=HELP_TEXT, parse_mode='HTML',
@@ -62,6 +74,11 @@ async def help_command(message: Message) -> None:
 
 @dp.message(F.content_type == ContentType.TEXT)
 async def message_processing(message: Message) -> None:
+    """
+    Обрабатывает текстовые сообщения пользователя
+    с помощью AI, отправляет ответ.
+    """
+
     try:
         user_id = get_user_id(message)
 
@@ -94,6 +111,11 @@ async def message_processing(message: Message) -> None:
 
 @dp.message(F.content_type != ContentType.TEXT)
 async def not_text_handler(message: Message):
+    """
+    Обрабатывает НЕтекстовые сообщения пользователей и отправляет
+    соответствующий ответ.
+    """
+
     await message.answer("❌Я работаю только с текстовыми сообщениями ❌")
 
 
