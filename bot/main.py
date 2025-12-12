@@ -91,7 +91,7 @@ async def message_processing(message: Message) -> None:
 
         logging.info(f'Отправка запроса к AI для пользователя {user_id}')
         completion = client.chat.completions.create(
-            model="gpt-5-mini",
+            model="chatgpt-4o-latest",
             messages=user_contexts[user_id]
         )
 
